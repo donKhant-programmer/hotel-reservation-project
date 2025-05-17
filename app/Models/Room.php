@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
-    protected $fillable = [
-        'room_type_id', 'room_number', 'price', 'capacity', 'status', 'description'
-    ];
+    use HasFactory;
 
-    public function roomType() {
-        return $this->belongsTo(RoomType::class);
-    }
+    protected $fillable = [
+        'name',
+        'description',
+        'price_per_night',
+        'thumbnail',
+        'max_occupancy',
+        'bed_type',
+        'size',
+        'is_featured'
+    ];
 }

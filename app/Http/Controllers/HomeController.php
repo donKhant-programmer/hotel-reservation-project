@@ -9,33 +9,31 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Dummy data fallback if no DB yet
-        // $featuredRooms = Room::latest()->take(3)->get() ?? [];
-
+        // Use dummy data for featured rooms
         $featuredRooms = [
             (object)[
                 'id' => 1,
                 'name' => 'Deluxe King Room',
-                'description' => 'A luxurious king-sized room with stunning views.',
-                'price_per_night' => 120,
+                'description' => 'Spacious room with a king-sized bed, en-suite bathroom, and city view.',
+                'price_per_night' => 199.99,
                 'thumbnail' => 'images/room1.jpg',
             ],
             (object)[
                 'id' => 2,
-                'name' => 'Standard Twin Room',
-                'description' => 'Perfect for travelers and families.',
-                'price_per_night' => 85,
+                'name' => 'Twin Room',
+                'description' => 'Comfortable room with two twin beds, perfect for friends or family members.',
+                'price_per_night' => 149.99,
                 'thumbnail' => 'images/room2.jpg',
             ],
             (object)[
                 'id' => 3,
-                'name' => 'Suite with Sea View',
-                'description' => 'Spacious suite with a private balcony.',
-                'price_per_night' => 200,
+                'name' => 'Family Suite',
+                'description' => 'Spacious suite with a king bed and sofa bed, ideal for families.',
+                'price_per_night' => 299.99,
                 'thumbnail' => 'images/room3.jpg',
             ],
         ];
-
+        
         return view('home', compact('featuredRooms'));
     }
 }
