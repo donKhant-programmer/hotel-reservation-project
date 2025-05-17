@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations Management - Paradise Hotel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="font-sans bg-gray-100">
+    <!-- Admin Navigation (same as admin dashboard) -->
+
+    <!-- Page Header -->
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">Reservations Management</h1>
+                <p class="text-gray-600">Manage all current and upcoming reservations</p>
+            </div>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                <i class="fas fa-plus mr-2"></i> New Reservation
+            </button>
+        </div>
+        
+        <!-- Filters -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-gray-700 text-sm mb-2">Status</label>
+                    <select class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option>All Statuses</option>
+                        <option>Confirmed</option>
+                        <option>Pending</option>
+                        <option>Cancelled</option>
+                        <option>Checked In</option>
+                        <option>Checked Out</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm mb-2">Room Type</label>
+                    <select class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option>All Room Types</option>
+                        <option>Deluxe Room</option>
+                        <option>Executive Suite</option>
+                        <option>Presidential Suite</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm mb-2">Date Range</label>
+                    <select class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option>Today</option>
+                        <option>Tomorrow</option>
+                        <option>This Week</option>
+                        <option>Next Week</option>
+                        <option>Custom Range</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg">
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reservations Table -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="text-xl font-bold">All Reservations</h2>
+                <div class="flex items-center">
+                    <span class="text-gray-600 mr-4">24 records found</span>
+                    <button class="bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded-lg text-sm mr-2">
+                        <i class="fas fa-download mr-1"></i> Export
+                    </button>
+                    <button class="bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded-lg text-sm">
+                        <i class="fas fa-print mr-1"></i> Print
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead>
+                        <tr class="border-b border-gray-200 bg-gray-50">
+                            <th class="text-left py-3 px-4">
+                                <input type="checkbox" class="rounded text-blue-600">
+                            </th>
+                            <th class="text-left py-3 px-4">Reservation #</th>
+                            <th class="text-left py-3 px-4">Guest</th>
+                            <th class="text-left py-3 px-4">Room</th>
+                            <th class="text-left py-3 px-4">Check-In</th>
+                            <th class="text-left py-3 px-4">Check-Out</th>
+                            <th class="text-left py-3 px-4">Status</th>
+                            <th class="text-left py-3 px-4">Total</th>
+                            <th class="text-left py-3 px-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                            <td class="py-4 px-4">
+                                <input type="checkbox" class="rounded text-blue-600">
+                            </td>
+                            <td class="py-4 px-4">RES-2023-1782</td>
+                            <td class="py-4 px-4">John Smith</td>
+                            <td class="py-4 px-4">Deluxe Room</td>
+                            <td class="py-4 px-4">Nov 15, 2023</td>
+                            <td class="py-4 px-4">Nov 18, 2023</td>
+                            <td class="py-4 px-4">
+                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Confirmed</span>
+                            </td>
+                            <td class="py-4 px-4">$674.61</td>
+                            <td class="py-4 px-4">
+                                <div class="flex space-x-2">
+                                    <button class="text-blue-600 hover:text-blue-800" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-green-600 hover:text-green-800" title="Check In">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                    </button>
+                                    <button class="text-red-600 hover:text-red-800" title="Cancel">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Additional rows would go here -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-4 border-t border-gray-200 flex justify-between items-center">
+                <div class="text-sm text-gray-600">
+                    Showing 1 to 10 of 24 entries
+                </div>
+                <div class="flex space-x-1">
+                    <button class="px-3 py-1 border rounded-lg text-gray-600 hover:bg-gray-100">
+                        <i class="fas fa-angle-left"></i>
+                    </button>
+                    <button class="px-3 py-1 border rounded-lg bg-blue-600 text-white">1</button>
+                    <button class="px-3 py-1 border rounded-lg text-gray-600 hover:bg-gray-100">2</button>
+                    <button class="px-3 py-1 border rounded-lg text-gray-600 hover:bg-gray-100">3</button>
+                    <button class="px-3 py-1 border rounded-lg text-gray-600 hover:bg-gray-100">
+                        <i class="fas fa-angle-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (same as homepage) -->
+</body>
+</html>
