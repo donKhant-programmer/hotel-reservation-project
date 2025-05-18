@@ -1,35 +1,58 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RoomController;
-use App\Http\Controllers\BookingController;
+use App\Http\Controllers\NewsletterController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// Main Pages
+Route::get('/', function () {
+    return view('home');
+})->name('home');
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/rooms', function () {
+    return view('rooms', [
+        'rooms' => [
+            ['id' => 1, 'name' => 'Deluxe Room', 'price' => 199],
+            ['id' => 2, 'name' => 'Executive Suite', 'price' => 299],
+            ['id' => 3, 'name' => 'Presidential Suite', 'price' => 499]
+        ]
+    ]);
+})->name('rooms');
 
-// Add this route for the rooms list page
-Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
+Route::get('/booking', function () {
+    return view('booking', [
+        'roomTypes' => [
+            ['id' => 1, 'name' => 'Deluxe Room'],
+            ['id' => 2, 'name' => 'Executive Suite'],
+            ['id' => 3, 'name' => 'Presidential Suite']
+        ]
+    ]);
+})->name('booking');
 
-Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
+// Authentication routes
+use Illuminate\Support\Facades\Auth;
 
-// Add booking routes
-Route::get('/booking/{room}', [BookingController::class, 'create'])->name('booking.create');
-Route::post('/booking/{room}', [BookingController::class, 'store'])->name('booking.store');
+// Authenticated user routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user/dashboard', function () {
+        return view('user.dashboard', [
+            'bookings' => [
+                ['id' => 1, 'room' => 'Deluxe Room', 'dates' => '2023-10-15 to 2023-10-20'],
+                ['id' => 2, 'room' => 'Executive Suite', 'dates' => '2023-11-05 to 2023-11-10']
+            ]
+        ]);
+    })->name('user.dashboard');
+    
+    Route::get('/profile', function () {
+        return view('profile', [
+            'user' => Auth::user()
+        ]);
+    })->name('profile');
+});
 
-// Add dashboard route
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Newsletter subscription (placeholder)
+Route::post('/newsletter/subscribe', function () {
+    return back()->with('success', 'Thanks for subscribing!');
+})->name('newsletter.subscribe');
+Auth::routes();
 
-require __DIR__.'/auth.php';
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
