@@ -4,40 +4,28 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Add this to your existing routes
-use App\Http\Controllers\BookingController;
+use App\Http\Controllers\RoomController;
 // Authentication routes
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\HomeController;
 
 // Main Pages
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/rooms', function () {
-    return view('rooms', [
-        'rooms' => [
-            ['id' => 1, 'name' => 'Deluxe Room', 'price' => 199],
-            ['id' => 2, 'name' => 'Executive Suite', 'price' => 299],
-            ['id' => 3, 'name' => 'Presidential Suite', 'price' => 499]
-        ]
-    ]);
-})->name('rooms');
+// Show all rooms
+Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
+Route::get('/rooms-list', [RoomController::class, 'index'])->name('rooms'); // Added alias route for backward compatibility
 
-// Route::get('/booking', function () {
-//     return view('booking', [
-//         'roomTypes' => [
-//             ['id' => 1, 'name' => 'Deluxe Room'],
-//             ['id' => 2, 'name' => 'Executive Suite'],
-//             ['id' => 3, 'name' => 'Presidential Suite']
-//         ]
-//     ]);
-// })->name('booking');
+// Show single room details
+Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
 
-
-
-Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+// Booking routes - fixed duplicate routes
+Route::get('/booking', [BookingController::class, 'index'])->name('booking'); // Changed from booking.index to booking
 Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-
+Route::get('/booking/create', [BookingController::class, 'create'])->name('booking.create');
 
 // Authenticated user routes
 Route::middleware(['auth'])->group(function () {
@@ -61,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/newsletter/subscribe', function () {
     return back()->with('success', 'Thanks for subscribing!');
 })->name('newsletter.subscribe');
+
+// Authentication routes
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');

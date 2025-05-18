@@ -23,6 +23,30 @@ class BookingController extends Controller
         return view('booking', compact('roomTypes', 'checkIn', 'checkOut', 'guests'));
     }
 
+    public function create(Request $request)
+{
+    $roomId = $request->query('room');
+    
+    $roomTypes = [
+        [
+            'id' => 1,
+            'name' => 'Deluxe Room',
+            'price' => 199,
+            // ... other room details
+        ],
+        // ... other room types
+    ];
+    
+    // Find selected room if coming from room page
+    $selectedRoom = collect($roomTypes)->firstWhere('id', $roomId);
+    
+    return view('booking', [
+        'roomTypes' => $roomTypes,
+        'selectedRoomId' => $selectedRoom ? $selectedRoom['id'] : null,
+        // ... other data
+    ]);
+}
+
     public function store(Request $request)
     {
         // Validate the request

@@ -66,19 +66,19 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                             <div>
                                 <label class="block text-gray-700 font-medium mb-2">Check-in Date</label>
-                                <input type="date" name="check_in" value="{{ $checkIn }}" 
+                                <input type="date" name="check_in" value="{{ $checkIn ?? request()->input('check_in', date('Y-m-d')) }}" 
                                        class="w-full p-3 border border-gray-300 rounded-lg" required>
                             </div>
                             <div>
                                 <label class="block text-gray-700 font-medium mb-2">Check-out Date</label>
-                                <input type="date" name="check_out" value="{{ $checkOut }}" 
+                                <input type="date" name="check_out" value="{{ $checkOut ?? request()->input('check_out', date('Y-m-d', strtotime('+1 day'))) }}" 
                                        class="w-full p-3 border border-gray-300 rounded-lg" required>
                             </div>
                             <div>
                                 <label class="block text-gray-700 font-medium mb-2">Guests</label>
                                 <select name="guests" class="w-full p-3 border border-gray-300 rounded-lg">
                                     @for($i = 1; $i <= 4; $i++)
-                                        <option value="{{ $i }}" {{ $guests == $i ? 'selected' : '' }}>{{ $i }} {{ $i == 1 ? 'Adult' : 'Adults' }}</option>
+                                        <option value="{{ $i }}" {{ ($guests ?? 2) == $i ? 'selected' : '' }}>{{ $i }} {{ $i == 1 ? 'Adult' : 'Adults' }}</option>
                                     @endfor
                                 </select>
                             </div>
@@ -120,15 +120,15 @@
                 <div class="space-y-4">
                     <div class="flex justify-between">
                         <span class="text-gray-600">Check-in</span>
-                        <span class="font-medium">{{ $checkIn ?: 'Select dates' }}</span>
+                        <span class="font-medium">{{ $checkIn ?? request()->input('check_in', date('Y-m-d')) }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">Check-out</span>
-                        <span class="font-medium">{{ $checkOut ?: 'Select dates' }}</span>
+                        <span class="font-medium">{{ $checkOut ?? request()->input('check_out', date('Y-m-d', strtotime('+1 day'))) }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">Guests</span>
-                        <span class="font-medium">{{ $guests }} {{ $guests == 1 ? 'Adult' : 'Adults' }}</span>
+                        <span class="font-medium">{{ $guests ?? 2 }} {{ ($guests ?? 2) == 1 ? 'Adult' : 'Adults' }}</span>
                     </div>
                     <div class="border-t border-gray-200 my-4"></div>
                     <div class="flex justify-between">

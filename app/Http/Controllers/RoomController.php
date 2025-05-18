@@ -59,4 +59,13 @@ class RoomController extends Controller
         
         return view('rooms.show', compact('room'));
     }
+    
+    // Remove or rename any duplicate index() method that might be here
+    // For example, if you have another method like:
+    // public function index() { ... }
+    // Either remove it or rename it to something like:
+    public function listRooms()
+    {
+        // Your code here
+    }
 }
