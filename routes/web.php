@@ -1,6 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+// Add this to your existing routes
+use App\Http\Controllers\BookingController;
+// Authentication routes
 use App\Http\Controllers\NewsletterController;
 
 // Main Pages
@@ -18,18 +23,21 @@ Route::get('/rooms', function () {
     ]);
 })->name('rooms');
 
-Route::get('/booking', function () {
-    return view('booking', [
-        'roomTypes' => [
-            ['id' => 1, 'name' => 'Deluxe Room'],
-            ['id' => 2, 'name' => 'Executive Suite'],
-            ['id' => 3, 'name' => 'Presidential Suite']
-        ]
-    ]);
-})->name('booking');
+// Route::get('/booking', function () {
+//     return view('booking', [
+//         'roomTypes' => [
+//             ['id' => 1, 'name' => 'Deluxe Room'],
+//             ['id' => 2, 'name' => 'Executive Suite'],
+//             ['id' => 3, 'name' => 'Presidential Suite']
+//         ]
+//     ]);
+// })->name('booking');
 
-// Authentication routes
-use Illuminate\Support\Facades\Auth;
+
+
+Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+
 
 // Authenticated user routes
 Route::middleware(['auth'])->group(function () {

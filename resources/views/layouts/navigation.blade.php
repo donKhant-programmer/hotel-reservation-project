@@ -10,7 +10,7 @@
             <div class="hidden md:flex items-center space-x-8">
                 <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' }}">Home</a>
                 <a href="{{ route('rooms') }}" class="{{ request()->routeIs('rooms') ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' }}">Rooms</a>
-                <a href="{{ route('booking') }}" class="{{ request()->routeIs('booking') ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' }}">Book Now</a>
+                <a href="{{ route('booking') }}" class="{{ request()->routeIs('booking*') ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' }}">Book Now</a>
                 
                 @auth
                     <a href="{{ route('user.dashboard') }}" class="{{ request()->routeIs('user.dashboard') ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' }}">My Bookings</a>
@@ -19,6 +19,7 @@
                 
                 @guest
                     <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Login</a>
+                    <a href="{{ route('register') }}" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 ml-2">Register</a>
                 @else
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
