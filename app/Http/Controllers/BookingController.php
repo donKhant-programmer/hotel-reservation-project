@@ -6,6 +6,47 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+    public function showSearchForm()
+    {
+        return view('booking.search');
+    }
+
+    public function checkAvailability(Request $request)
+    {
+        $validated = $request->validate([
+            'check_in' => 'required|date',
+            'check_out' => 'required|date|after:check_in',
+            'guests' => 'required|integer|min:1'
+        ]);
+
+        // You would typically query available rooms based on date + guest count
+        $availableRooms = [
+            [
+                'id' => 1,
+                'name' => 'Deluxe Room',
+                'price' => 199,
+                'guests' => 2,
+                'image' => 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304',
+                'description' => 'Spacious room with king bed and city view'
+            ],
+            [
+                'id' => 2,
+                'name' => 'Executive Suite',
+                'price' => 299,
+                'guests' => 2,
+                'image' => 'https://images.unsplash.com/photo-1566669437687-7040a6926753',
+                'description' => 'Luxurious suite with separate living area'
+            ]
+        ];
+
+        return view('booking.availability', [
+            'rooms' => $availableRooms,
+            'check_in' => $validated['check_in'],
+            'check_out' => $validated['check_out'],
+            'guests' => $validated['guests'],
+        ]);
+    }
+    
     public function index(Request $request)
     {
         // Get room types from database or config
@@ -41,9 +82,11 @@ class BookingController extends Controller
     $selectedRoom = collect($roomTypes)->firstWhere('id', $roomId);
     
     return view('booking', [
-        'roomTypes' => $roomTypes,
-        'selectedRoomId' => $selectedRoom ? $selectedRoom['id'] : null,
-        // ... other data
+        'room' => $selectedRoom,
+        'checkIn' => $request->check_in,
+        'checkOut' => $request->check_out,
+        'guests' => $request->guests,
+        'totalPrice' => 10, // $calculatedPrice,
     ]);
 }
 
@@ -67,4 +110,17 @@ class BookingController extends Controller
             'booking_id' => 'BOOK-' . uniqid()
         ]);
     }
+
+    public function confirm(Request $request)
+    {
+        // Store booking logic here (save to DB or session, send email, etc.)
+        // For now, just return a success view
+
+        return view('booking-success', [
+            'name' => $request->full_name,
+            'checkIn' => $request->check_in,
+            'checkOut' => $request->check_out,
+        ]);
+    }
+
 }

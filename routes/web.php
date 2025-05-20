@@ -23,9 +23,13 @@ Route::get('/rooms-list', [RoomController::class, 'index'])->name('rooms'); // A
 Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
 
 // Booking routes - fixed duplicate routes
+Route::get('/booking/search', [BookingController::class, 'showSearchForm'])->name('booking.search');
+Route::post('/booking/availability', [BookingController::class, 'checkAvailability'])->name('booking.availability');
+
 Route::get('/booking', [BookingController::class, 'index'])->name('booking'); // Changed from booking.index to booking
 Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 Route::get('/booking/create', [BookingController::class, 'create'])->name('booking.create');
+Route::post('/booking/confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
 
 // Authenticated user routes
 Route::middleware(['auth'])->group(function () {

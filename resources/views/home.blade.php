@@ -30,7 +30,7 @@
             <h1 class="text-4xl md:text-6xl font-bold mb-6">Luxury Redefined at Paradise Hotel</h1>
             <p class="text-xl mb-10">Experience unparalleled comfort and impeccable service in the heart of the city</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="{{ route('booking') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all">Book Now</a>
+                <a href="{{ route('booking.search') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all">Book Now</a>
                 <a href="#featured-rooms" class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all">Explore Rooms</a>
             </div>
         </div>
@@ -99,7 +99,7 @@
                 
                 <!-- Room 2 -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-md feature-card">
-                    <img src="https://images.unsplash.com/photo-1566669437687-7040a6926753" alt="Executive Suite" class="w-full h-64 object-cover">
+                    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304" alt="Executive Suite" class="w-full h-64 object-cover">
                     <div class="p-6">
                         <div class="flex justify-between items-start mb-2">
                             <h3 class="text-xl font-bold">Executive Suite</h3>
