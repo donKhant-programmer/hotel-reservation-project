@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 // Show all rooms
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
-Route::get('/rooms-list', [RoomController::class, 'index'])->name('rooms'); // Added alias route for backward compatibility
+Route::get('/rooms-list', [RoomController::class, 'index'])->name('rooms');
 
 // Show single room details
 Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
@@ -49,12 +49,5 @@ Route::middleware(['auth'])->group(function () {
     })->name('profile');
 });
 
-// Newsletter subscription (placeholder)
-Route::post('/newsletter/subscribe', function () {
-    return back()->with('success', 'Thanks for subscribing!');
-})->name('newsletter.subscribe');
-
 // Authentication routes
 Auth::routes();
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -28,7 +28,7 @@
             <div>
                 <h4 class="font-bold mb-4">Newsletter</h4>
                 <p class="text-gray-400 mb-4">Subscribe for special offers and updates</p>
-                <form class="flex" action="{{ route('newsletter.subscribe') }}" method="POST">
+                <form class="flex" action="" method="POST">
                     @csrf
                     <input type="email" name="email" placeholder="Your email" class="px-4 py-2 rounded-l-md w-full">
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r-md">
