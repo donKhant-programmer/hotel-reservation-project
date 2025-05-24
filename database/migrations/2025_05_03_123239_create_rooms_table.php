@@ -6,16 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('rooms', function (Blueprint $table) {
-            $table->id();
-            $table->string('room_number')->unique();
-            $table->foreignId('room_type_id')->constrained()->onDelete('cascade');
-            $table->enum('status', ['available', 'booked', 'maintenance'])->default('available');
-            $table->text('description')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('rooms')) {
+            Schema::create('rooms', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->text('description')->nullable();
+                $table->integer('capacity');
+                $table->decimal('price_per_night', 8, 2);
+                $table->string('image')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

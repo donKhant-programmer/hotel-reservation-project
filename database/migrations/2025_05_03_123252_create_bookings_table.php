@@ -7,17 +7,19 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     public function up()
-    {
-        Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('room_id')->constrained()->onDelete('cascade');
-            $table->foreignId('guest_id')->constrained()->onDelete('cascade');
-            $table->date('check_in');
-            $table->date('check_out');
-            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('bookings', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('room_id')->constrained()->onDelete('cascade');
+        $table->string('full_name'); // ✅ add this
+        $table->string('email');     // ✅ add this
+        $table->integer('guests');   // ✅ add this
+        $table->date('check_in');
+        $table->date('check_out');
+        $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

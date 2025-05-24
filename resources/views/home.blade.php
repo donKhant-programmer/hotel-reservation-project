@@ -41,7 +41,7 @@
         <div class="max-w-6xl mx-auto px-6">
             <div class="bg-white rounded-xl shadow-xl p-8 border border-gray-100">
                 <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Find Your Perfect Stay</h2>
-                <form class="max-w-6xl mx-auto" action="{{ route('booking') }}" method="get">
+                <form class="max-w-6xl mx-auto" action="{{ route('booking.availability') }}" method="post">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div>

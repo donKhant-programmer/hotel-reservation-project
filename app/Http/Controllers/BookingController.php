@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -11,41 +12,71 @@ class BookingController extends Controller
         return view('booking.search');
     }
 
+    // public function checkAvailability(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'check_in' => 'required|date',
+    //         'check_out' => 'required|date|after:check_in',
+    //         'guests' => 'required|integer|min:1'
+    //     ]);
+
+    //     // You would typically query available rooms based on date + guest count
+    //     $availableRooms = [
+    //         [
+    //             'id' => 1,
+    //             'name' => 'Deluxe Room',
+    //             'price' => 199,
+    //             'guests' => 2,
+    //             'image' => 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304',
+    //             'description' => 'Spacious room with king bed and city view'
+    //         ],
+    //         [
+    //             'id' => 2,
+    //             'name' => 'Executive Suite',
+    //             'price' => 299,
+    //             'guests' => 2,
+    //             'image' => 'https://images.unsplash.com/photo-1566669437687-7040a6926753',
+    //             'description' => 'Luxurious suite with separate living area'
+    //         ]
+    //     ];
+
+    //     return view('booking.availability', [
+    //         'rooms' => $availableRooms,
+    //         'check_in' => $validated['check_in'],
+    //         'check_out' => $validated['check_out'],
+    //         'guests' => $validated['guests'],
+    //     ]);
+    // }
+
     public function checkAvailability(Request $request)
-    {
-        $validated = $request->validate([
-            'check_in' => 'required|date',
-            'check_out' => 'required|date|after:check_in',
-            'guests' => 'required|integer|min:1'
-        ]);
+{
+    $validated = $request->validate([
+        'check_in' => 'required|date|after_or_equal:today',
+        'check_out' => 'required|date|after:check_in',
+        'guests' => 'required|integer|min:1',
+    ]);
 
-        // You would typically query available rooms based on date + guest count
-        $availableRooms = [
-            [
-                'id' => 1,
-                'name' => 'Deluxe Room',
-                'price' => 199,
-                'guests' => 2,
-                'image' => 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304',
-                'description' => 'Spacious room with king bed and city view'
-            ],
-            [
-                'id' => 2,
-                'name' => 'Executive Suite',
-                'price' => 299,
-                'guests' => 2,
-                'image' => 'https://images.unsplash.com/photo-1566669437687-7040a6926753',
-                'description' => 'Luxurious suite with separate living area'
-            ]
-        ];
+    $rooms = Room::where('capacity', '>=', $validated['guests'])
+        ->whereDoesntHave('bookings', function ($query) use ($validated) {
+            $query->where(function ($q) use ($validated) {
+                $q->whereBetween('check_in', [$validated['check_in'], $validated['check_out']])
+                  ->orWhereBetween('check_out', [$validated['check_in'], $validated['check_out']])
+                  ->orWhere(function ($q) use ($validated) {
+                      $q->where('check_in', '<=', $validated['check_in'])
+                        ->where('check_out', '>=', $validated['check_out']);
+                  });
+            });
+        })
+        ->get();
 
-        return view('booking.availability', [
-            'rooms' => $availableRooms,
-            'check_in' => $validated['check_in'],
-            'check_out' => $validated['check_out'],
-            'guests' => $validated['guests'],
-        ]);
-    }
+    return view('booking.available-rooms', [
+        'rooms' => $rooms,
+        'check_in' => $validated['check_in'],
+        'check_out' => $validated['check_out'],
+        'guests' => $validated['guests'],
+    ]);
+}
+
     
     public function index(Request $request)
     {

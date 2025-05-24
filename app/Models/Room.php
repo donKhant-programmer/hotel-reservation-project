@@ -19,4 +19,9 @@ class Room extends Model
         'size',
         'is_featured'
     ];
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }
