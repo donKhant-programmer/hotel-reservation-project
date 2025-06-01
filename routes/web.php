@@ -31,23 +31,22 @@ Route::post('/booking', [BookingController::class, 'store'])->name('booking.stor
 Route::get('/booking/create', [BookingController::class, 'create'])->name('booking.create');
 Route::post('/booking/confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
 
-// Authenticated user routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/user/dashboard', function () {
-        return view('user.dashboard', [
-            'bookings' => [
-                ['id' => 1, 'room' => 'Deluxe Room', 'dates' => '2023-10-15 to 2023-10-20'],
-                ['id' => 2, 'room' => 'Executive Suite', 'dates' => '2023-11-05 to 2023-11-10']
-            ]
-        ]);
-    })->name('user.dashboard');
-    
-    Route::get('/profile', function () {
-        return view('profile', [
-            'user' => Auth::user()
-        ]);
-    })->name('profile');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
 
-// Authentication routes
-Auth::routes();
+// For normal user
+Route::middleware(['auth', 'is_user'])->group(function () {
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+});
+
+// For admin
+Route::middleware(['auth', 'is_admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+});
