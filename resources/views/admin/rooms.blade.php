@@ -14,7 +14,7 @@
     </form>
 </div>
 
-<a href="{{ route('admin.rooms.create') }}" class="btn btn-success mb-3">+ Add Room</a>
+<a href="{{ route('admin.rooms.form') }}" class="btn btn-success mb-3">+ Add Room</a>
 
 <table class="table table-bordered">
     <thead>

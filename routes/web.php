@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 // Add this to your existing routes
 // Authentication routes
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\UserRoomController;
@@ -38,7 +37,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/rooms', [AdminController::class, 'rooms'])->name('rooms');
-    Route::get('/rooms/create', [AdminController::class, 'createRoom'])->name('rooms.create');
+    Route::get('/rooms/create', [AdminController::class, 'createRoom'])->name('rooms.form');
     Route::post('/rooms/create', [AdminController::class, 'storeRoom'])->name('rooms.store');
     Route::get('/rooms/{room}/edit', [AdminController::class, 'editRoom'])->name('rooms.edit');
     Route::put('/rooms/{room}/edit', [AdminController::class, 'updateRoom'])->name('rooms.update');

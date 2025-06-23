@@ -9,33 +9,31 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 class RoomTypeSeeder extends Seeder
 {
     // database/seeders/RoomTypeSeeder.php
-
-public function run()
+    public function run(): void
     {
-        $roomTypes = [
-            [
-                'name' => 'Standard',
-                'description' => 'Basic room with essential amenities.',
-                'max_guests' => 2,
-                'price_per_night' => 50.00,
-            ],
-            [
-                'name' => 'Deluxe',
-                'description' => 'Spacious room with extra facilities.',
-                'max_guests' => 3,
-                'price_per_night' => 100.00,
-            ],
-            [
-                'name' => 'Suite',
-                'description' => 'Large suite with luxury amenities.',
-                'max_guests' => 4,
-                'price_per_night' => 150.00,
-            ],
-        ];
+        RoomType::create([
+            'name' => 'Standard Room',
+            'description' => 'A comfortable room with essential amenities.',
+            'base_price' => 79.99,
+            'capacity' => 2,
+            'amenities' => ['Free Wi-Fi', 'Air Conditioning', 'Flat-screen TV']
+        ]);
 
-        foreach ($roomTypes as $type) {
-            RoomType::create($type);
-        }
+        RoomType::create([
+            'name' => 'Deluxe Room',
+            'description' => 'Spacious deluxe room with extra features.',
+            'base_price' => 129.99,
+            'capacity' => 3,
+            'amenities' => ['Free Wi-Fi', 'Mini Bar', 'Balcony', 'King Bed']
+        ]);
+
+        RoomType::create([
+            'name' => 'Suite',
+            'description' => 'Luxurious suite with separate living area.',
+            'base_price' => 199.99,
+            'capacity' => 4,
+            'amenities' => ['Jacuzzi', 'Mini Bar', 'City View', 'Large Sofa']
+        ]);
     }
 
 }

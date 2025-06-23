@@ -16,7 +16,7 @@ class RoomController extends Controller
 
     // public function create() {
     //     $roomTypes = RoomType::all();
-    //     return view('admin.rooms.create', compact('roomTypes'));
+    //     return view('admin.rooms.form', compact('roomTypes'));
     // }
 
     // public function store(Request $request) {
