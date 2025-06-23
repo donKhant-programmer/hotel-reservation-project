@@ -11,13 +11,15 @@ return new class extends Migration
         if (!Schema::hasTable('rooms')) {
             Schema::create('rooms', function (Blueprint $table) {
                 $table->id();
-                $table->string('name');
-                $table->text('description')->nullable();
-                $table->integer('capacity');
-                $table->decimal('price_per_night', 8, 2);
-                $table->string('image')->nullable();
+                $table->string('room_number');
+                $table->unsignedBigInteger('room_type_id');
+                $table->string('floor')->nullable();
+                $table->enum('status', ['available', 'booked', 'maintenance'])->default('available');
                 $table->timestamps();
+            
+                $table->foreign('room_type_id')->references('id')->on('room_types')->onDelete('cascade');
             });
+            
         }
     }
 

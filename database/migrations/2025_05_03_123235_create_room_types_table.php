@@ -12,12 +12,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->integer('max_guests');
-            $table->decimal('price_per_night', 8, 2);
+            $table->decimal('base_price', 8, 2);   // was: price_per_night
+            $table->integer('capacity');
+            $table->json('amenities')->nullable(); // new: to store features like WiFi, TV
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.

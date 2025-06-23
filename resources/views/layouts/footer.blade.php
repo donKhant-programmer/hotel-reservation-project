@@ -12,8 +12,8 @@
                     <li><a href="{{ route('rooms') }}" class="text-gray-400 hover:text-white">Rooms</a></li>
                     <li><a href="{{ route('booking') }}" class="text-gray-400 hover:text-white">Book Now</a></li>
                     @auth
-                        <li><a href="{{ route('user.dashboard') }}" class="text-gray-400 hover:text-white">My Bookings</a></li>
-                        <li><a href="{{ route('profile') }}" class="text-gray-400 hover:text-white">My Profile</a></li>
+                        {{-- <li><a href="{{ route('user.dashboard') }}" class="text-gray-400 hover:text-white">My Bookings</a></li> --}}
+                        {{-- <li><a href="{{ route('profile') }}" class="text-gray-400 hover:text-white">My Profile</a></li> --}}
                     @endauth
                 </ul>
             </div>

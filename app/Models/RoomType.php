@@ -9,10 +9,15 @@ class RoomType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'max_guests', 'price_per_night'];
+    protected $fillable = ['name', 'description', 'base_price', 'capacity', 'amenities'];
+
+    protected $casts = [
+        'amenities' => 'array',
+    ];
 
     public function rooms()
     {
         return $this->hasMany(Room::class);
     }
+    
 }
