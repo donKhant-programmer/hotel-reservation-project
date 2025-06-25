@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 // Add this to your existing routes
 // Authentication routes
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\UserRoomController;
@@ -13,9 +14,7 @@ use App\Http\Controllers\Admin\RoomTypeController;
 
 
 // Main Pages
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Show all rooms
 Route::get('/rooms', [UserRoomController::class, 'index'])->name('rooms.index');
@@ -46,6 +45,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('room-types', RoomTypeController::class)->except(['show']);
 
     Route::get('/bookings', [AdminController::class, 'bookings'])->name('bookings');
+    Route::put('/bookings/{booking}/status', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');
+
     Route::get('/users', [AdminController::class, 'users'])->name('users');
 });
 

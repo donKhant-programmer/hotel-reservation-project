@@ -8,6 +8,7 @@ use App\Models\Booking;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -49,19 +50,27 @@ public function storeRoom(Request $request)
         'floor' => 'nullable|string',
         'room_type_id' => 'required|exists:room_types,id',
         'description' => 'nullable|string',
-        'status' => 'nullable|string', // if you're using it
+        'status' => 'nullable|string',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
+
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('rooms', 'public'); // stored in storage/app/public/rooms
+    }
 
     Room::create([
         'room_number' => $request->room_number,
         'floor' => $request->floor,
         'room_type_id' => $request->room_type_id,
-        'description' => $request->description, // ✅ Add this
-        'status' => $request->status ?? 'available', // optional if you want to set default
+        'description' => $request->description,
+        'status' => $request->status ?? 'available',
+        'image' => $imagePath,
     ]);
 
     return redirect()->route('admin.rooms')->with('success', 'Room created successfully.');
 }
+
 
 
 public function editRoom(Room $room)
@@ -72,7 +81,6 @@ public function editRoom(Room $room)
         'roomTypes' => $roomTypes
     ]);
 }
-
 public function updateRoom(Request $request, Room $room)
 {
     $request->validate([
@@ -81,18 +89,27 @@ public function updateRoom(Request $request, Room $room)
         'room_type_id' => 'required|exists:room_types,id',
         'description' => 'nullable|string',
         'status' => 'nullable|string',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
 
-    $room->update([
-        'room_number' => $request->room_number,
-        'floor' => $request->floor,
-        'room_type_id' => $request->room_type_id,
-        'description' => $request->description,  // <== Make sure this line exists
-        'status' => $request->status ?? 'available',
-    ]);
+    $data = $request->only(['room_number', 'floor', 'room_type_id', 'description', 'status']);
+    $data['status'] = $request->status ?? 'available';
+
+    if ($request->hasFile('image')) {
+        // Optional: delete old image if exists
+        if ($room->image && Storage::disk('public')->exists($room->image)) {
+            Storage::disk('public')->delete($room->image);
+        }
+    
+        $data['image'] = $request->file('image')->store('rooms', 'public');
+    }
+    
+
+    $room->update($data);
 
     return redirect()->route('admin.rooms')->with('success', 'Room updated successfully.');
 }
+
 
 
 public function deleteRoom(Room $room)

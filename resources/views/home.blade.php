@@ -41,102 +41,94 @@
         <div class="max-w-6xl mx-auto px-6">
             <div class="bg-white rounded-xl shadow-xl p-8 border border-gray-100">
                 <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Find Your Perfect Stay</h2>
-                <form class="max-w-6xl mx-auto" action="{{ route('booking.availability') }}" method="post">
+                <form action="{{ route('booking.availability') }}" method="POST" class="max-w-6xl mx-auto">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <!-- Check-in -->
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Check-in</label>
-                            <input type="date" name="check_in" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <input type="date" name="check_in" required class="w-full p-3 border border-gray-300 rounded-lg">
                         </div>
+                
+                        <!-- Check-out -->
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Check-out</label>
-                            <input type="date" name="check_out" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <input type="date" name="check_out" required class="w-full p-3 border border-gray-300 rounded-lg">
                         </div>
+                
+                        <!-- Guests -->
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Guests</label>
-                            <select name="guests" class="w-full p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <select name="guests" required class="w-full p-3 border border-gray-300 rounded-lg">
                                 <option value="1">1 Adult</option>
                                 <option value="2">2 Adults</option>
                                 <option value="3">3 Adults</option>
                                 <option value="4">4 Adults</option>
                             </select>
                         </div>
+                
+                        <!-- Submit -->
                         <div class="flex items-end">
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold p-3 rounded-lg transition">Check Availability</button>
+                            <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 transition">Check Availability</button>
                         </div>
                     </div>
                 </form>
+                
             </div>
         </div>
     </section>
 
     <!-- Featured Rooms -->
-    <section id="featured-rooms" class="py-20 bg-gray-50">
+    <section id="featured-rooms" class="py-20 bg-gray-100">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 text-gray-800">Our Featured Rooms</h2>
-                <div class="divider"></div>
-                <p class="text-gray-600 max-w-3xl mx-auto text-lg">Experience luxury and comfort in our carefully designed rooms</p>
+            <!-- Title -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800">Our Featured Rooms</h2>
+                <div class="mt-2 w-24 h-1 mx-auto bg-blue-600 rounded"></div>
+                <p class="text-gray-500 mt-4">Experience comfort and elegance with our best rooms.</p>
             </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Room 1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md feature-card">
-                    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304" alt="Deluxe Room" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold">Deluxe Room</h3>
-                            <span class="text-yellow-600 font-bold">$199/night</span>
+    
+            <!-- Room Cards -->
+            <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-8">
+                @forelse ($featuredRooms as $room)
+                    <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                        @if ($room->image)
+                            <img src="{{ asset('storage/' . $room->image) }}" alt="Room Image"
+                                 class="w-full h-48 object-cover rounded-t-lg">
+                        @else
+                            <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+                                No Image
+                            </div>
+                        @endif
+    
+                        <div class="p-5">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-1">
+                                {{ $room->room_number }} - {{ $room->roomType->name }}
+                            </h3>
+                            <p class="text-gray-500 text-sm mb-2">
+                                {{ Str::limit($room->description, 100) }}
+                            </p>
+    
+                            <div class="flex items-center justify-between mt-4">
+                                <span class="text-lg font-bold text-blue-600">
+                                    ${{ number_format($room->roomType->base_price, 2) }}
+                                    <span class="text-sm text-gray-500">/night</span>
+                                </span>
+                                <a href="{{ route('rooms.show', $room) }}"
+                                   class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                                    View Details →
+                                </a>
+                            </div>
                         </div>
-                        <p class="text-gray-600 mb-4">Spacious room with king bed and city view</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-user mr-1"></i> 2 Adults</span>
-                            <span><i class="fas fa-ruler-combined mr-1"></i> 350 sq ft</span>
-                        </div>
-                        <a href="{{ route('rooms') }}#deluxe" class="block text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">View Details</a>
                     </div>
-                </div>
-                
-                <!-- Room 2 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md feature-card">
-                    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304" alt="Executive Suite" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold">Executive Suite</h3>
-                            <span class="text-yellow-600 font-bold">$299/night</span>
-                        </div>
-                        <p class="text-gray-600 mb-4">Luxurious suite with separate living area</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-user mr-1"></i> 2 Adults</span>
-                            <span><i class="fas fa-ruler-combined mr-1"></i> 550 sq ft</span>
-                        </div>
-                        <a href="{{ route('rooms') }}#executive" class="block text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">View Details</a>
-                    </div>
-                </div>
-                
-                <!-- Room 3 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-md feature-card">
-                    <img src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b" alt="Presidential Suite" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold">Presidential Suite</h3>
-                            <span class="text-yellow-600 font-bold">$499/night</span>
-                        </div>
-                        <p class="text-gray-600 mb-4">Ultimate luxury with panoramic city views</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-user mr-1"></i> 4 Adults</span>
-                            <span><i class="fas fa-ruler-combined mr-1"></i> 1200 sq ft</span>
-                        </div>
-                        <a href="{{ route('rooms') }}#presidential" class="block text-center bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">View Details</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-16">
-                <a href="{{ route('rooms') }}" class="inline-block bg-gray-900 hover:bg-black text-white font-bold py-3 px-8 rounded-lg transition uppercase tracking-wider text-sm">View All Rooms</a>
+                @empty
+                    <p class="col-span-3 text-center text-gray-500">No featured rooms available at the moment.</p>
+                @endforelse
             </div>
         </div>
     </section>
+    
+
 
     <!-- Amenities Section -->
     <section class="py-20 bg-white">

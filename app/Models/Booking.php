@@ -15,17 +15,8 @@ class Booking extends Model
      * @var array
      */
     protected $fillable = [
-        'room_id',
-        'full_name',
-        'email',
-        'check_in',
-        'check_out',
-        'guests',
-        'status',
-        'special_requests',
-        'phone',
-        'total_price'
-    ];
+        'reference', 'room_id', 'check_in', 'check_out', 'guests', 'name', 'email', 'phone', 'special_requests', 'user_id',  'status'];    
+
 
     /**
      * Get the room associated with the booking.

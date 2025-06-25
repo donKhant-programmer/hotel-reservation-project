@@ -10,20 +10,20 @@ return new class extends Migration
 {
     Schema::create('bookings', function (Blueprint $table) {
         $table->id();
+        $table->string('reference')->unique();
         $table->foreignId('room_id')->constrained()->onDelete('cascade');
-        $table->string('full_name'); // ✅ add this
-        $table->string('email');     // ✅ add this
-        $table->integer('guests');   // ✅ add this
         $table->date('check_in');
         $table->date('check_out');
-        $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
+        $table->integer('guests');
+        $table->string('name');
+        $table->string('email');
+        $table->string('phone');
+        $table->text('special_requests')->nullable();
         $table->timestamps();
     });
 }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('bookings');
