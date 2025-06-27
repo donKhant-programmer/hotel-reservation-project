@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-                <h3 class="text-xl font-bold mb-4">Paradise Hotel</h3>
+                <h3 class="text-xl font-bold mb-4">WYNDHAM Hotel</h3>
                 <p class="text-gray-400">Luxury accommodations with world-class service in the heart of the city.</p>
             </div>
             <div>
@@ -22,7 +22,7 @@
                 <ul class="space-y-2 text-gray-400">
                     <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Luxury Ave, City</li>
                     <li><i class="fas fa-phone mr-2"></i> +1 (555) 123-4567</li>
-                    <li><i class="fas fa-envelope mr-2"></i> info@paradisehotel.com</li>
+                    <li><i class="fas fa-envelope mr-2"></i> info@wyndhamhotel.com</li>
                 </ul>
             </div>
             <div>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; {{ now()->year }} Paradise Hotel. All rights reserved.</p>
+            <p>&copy; {{ now()->year }} WYNDHAM Hotel. All rights reserved.</p>
         </div>
     </div>
 </footer>

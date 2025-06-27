@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Paradise Hotel - Luxury Accommodations')
+@section('title', 'WYNDHAM Hotel - Luxury Accommodations')
 
 @section('styles')
 <style>
@@ -27,17 +27,17 @@
     <section class="hero-bg h-screen flex items-center justify-center relative">
         <div class="absolute inset-0 bg-black opacity-40"></div>
         <div class="relative z-10 text-center px-6 max-w-4xl mx-auto text-white">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">Luxury Redefined at Paradise Hotel</h1>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Luxury Redefined at WYNDHAM Hotel</h1>
             <p class="text-xl mb-10">Experience unparalleled comfort and impeccable service in the heart of the city</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="{{ route('booking.search') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all">Book Now</a>
-                <a href="#featured-rooms" class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all">Explore Rooms</a>
+                <a href="#booking-widget" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all">Book Now</a>
+                <a href="{{ route('rooms') }}" class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all">Explore Rooms</a>
             </div>
         </div>
     </section>
 
     <!-- Booking Widget -->
-    <section class="bg-white py-12 -mt-20 relative z-20">
+    <section  id="booking-widget" class="bg-white py-12 -mt-20 relative z-20">
         <div class="max-w-6xl mx-auto px-6">
             <div class="bg-white rounded-xl shadow-xl p-8 border border-gray-100">
                 <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Find Your Perfect Stay</h2>
@@ -114,10 +114,16 @@
                                     ${{ number_format($room->roomType->base_price, 2) }}
                                     <span class="text-sm text-gray-500">/night</span>
                                 </span>
-                                <a href="{{ route('rooms.show', $room) }}"
-                                   class="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                                    View Details →
-                                </a>
+                                <a href="{{ route('rooms.show', [
+    'room' => $room->id,
+    'check_in' => request('check_in'),
+    'check_out' => request('check_out'),
+    'guests' => request('guests')
+]) }}"
+   class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+   View Details →
+</a>
+
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,7 @@
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
                 <i class="fas fa-hotel text-blue-600 text-2xl mr-2"></i>
-                <span class="text-xl font-bold text-gray-800">Paradise Hotel</span>
+                <span class="text-xl font-bold text-gray-800">WYNDHAM Hotel</span>
             </div>
 
             <!-- Menu Items -->
@@ -12,7 +12,7 @@
                 <!-- Main Navigation -->
                 <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' }} px-3 py-2">Home</a>
                 <a href="{{ route('rooms') }}" class="{{ request()->routeIs('rooms') ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' }} px-3 py-2">Rooms</a>
-                <a href="{{ route('booking') }}" class="{{ request()->routeIs('booking*') ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' }} px-3 py-2">Book Now</a>
+                <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-600' }} px-3 py-2">About</a>
 
                 @auth
                     <!-- Logged-in User Info & Links -->

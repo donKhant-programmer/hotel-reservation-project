@@ -17,8 +17,9 @@ use App\Http\Controllers\Admin\RoomTypeController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Show all rooms
-Route::get('/rooms', [UserRoomController::class, 'index'])->name('rooms.index');
-Route::get('/rooms-list', [UserRoomController::class, 'index'])->name('rooms');
+// Route::get('/rooms', [UserRoomController::class, 'index'])->name('rooms.index');
+Route::get('/room-list', [UserRoomController::class, 'index'])->name('rooms');
+// Route::get('/rooms-list', [UserRoomController::class, 'index'])->name('rooms');
 
 // Show single room details
 Route::get('/rooms/{room}', [UserRoomController::class, 'show'])->name('rooms.show');
@@ -80,3 +81,5 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::view('/about', 'about')->name('about');
