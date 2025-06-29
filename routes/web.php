@@ -33,6 +33,10 @@ Route::post('/booking', [BookingController::class, 'store'])->name('booking.stor
 Route::get('/booking/create', [BookingController::class, 'create'])->name('booking.create');
 Route::post('/booking/confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
 
+Route::get('/booking/{booking}/payment', [BookingController::class, 'payment'])->name('booking.payment');
+Route::post('/booking/{booking}/pay', [BookingController::class, 'pay'])->name('booking.pay');
+
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
