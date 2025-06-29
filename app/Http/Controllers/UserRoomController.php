@@ -15,6 +15,8 @@ class UserRoomController extends Controller
 
     public function show(Room $room, Request $request)
 {
+    $room = Room::with(['roomType', 'reviews.user'])->findOrFail($room->id);
+
     return view('rooms.show', [
         'room' => $room,
         'check_in' => $request->check_in,

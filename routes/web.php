@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\UserRoomController;
 use App\Http\Controllers\Admin\AdminController;
@@ -27,15 +28,6 @@ Route::get('/rooms/{room}', [UserRoomController::class, 'show'])->name('rooms.sh
 // Booking routes - fixed duplicate routes
 Route::get('/booking/search', [BookingController::class, 'showSearchForm'])->name('booking.search');
 Route::post('/booking/availability', [BookingController::class, 'checkAvailability'])->name('booking.availability');
-
-Route::get('/booking', [BookingController::class, 'index'])->name('booking'); // Changed from booking.index to booking
-Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-Route::get('/booking/create', [BookingController::class, 'create'])->name('booking.create');
-Route::post('/booking/confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
-
-Route::get('/booking/{booking}/payment', [BookingController::class, 'payment'])->name('booking.payment');
-Route::post('/booking/{booking}/pay', [BookingController::class, 'pay'])->name('booking.pay');
-
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
@@ -58,24 +50,21 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 Route::middleware(['auth'])->prefix('user')->name('user.')->group(function () {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('updateProfile');
-});
-
-// Route::middleware(['auth', 'admin'])->group(function () {
-
-//     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-
-//     Route::get('/rooms', [AdminController::class, 'rooms'])->name('rooms');
-//     // New
-//     Route::get('/rooms/create', [AdminController::class, 'createRoom'])->name('rooms.create');
-//     Route::post('/rooms/create', [AdminController::class, 'storeRoom'])->name('rooms.store');
-//     Route::get('/rooms/{room}/edit', [AdminController::class, 'editRoom'])->name('rooms.edit');
-//     Route::put('/rooms/{room}/edit', [AdminController::class, 'updateRoom'])->name('rooms.update');
-//     Route::delete('/rooms/{room}/delete', [AdminController::class, 'deleteRoom'])->name('rooms.delete');
 
     
-//     Route::get('/bookings', [AdminController::class, 'bookings'])->name('bookings');
-//     Route::get('/users', [AdminController::class, 'users'])->name('users');
-// });
+Route::get('/booking', [BookingController::class, 'index'])->name('booking'); // Changed from booking.index to booking
+Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+Route::get('/booking/create', [BookingController::class, 'create'])->name('booking.create');
+Route::post('/booking/confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
+
+Route::get('/booking/{booking}/payment', [BookingController::class, 'payment'])->name('booking.payment');
+Route::post('/booking/{booking}/pay', [BookingController::class, 'pay'])->name('booking.pay');
+
+Route::get('/reviews/{booking}/create', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/reviews/{booking}', [ReviewController::class, 'store'])->name('reviews.store');
+
+});
+
 
 // Auth routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

@@ -26,4 +26,15 @@ class Room extends Model
     return $this->belongsTo(RoomType::class);
 }
 
+public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
+
+// In Room model
+public function averageRating()
+{
+    return $this->reviews()->avg('rating');
+}
+
 }

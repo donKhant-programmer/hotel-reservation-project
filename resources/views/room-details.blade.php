@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('title', $room['name'] . ' - WYNDHAM Hotel')
 
@@ -74,4 +74,4 @@
         
     </div>
 </div>
-@endsection
+@endsection --}}

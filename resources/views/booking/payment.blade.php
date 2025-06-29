@@ -18,7 +18,7 @@
 
         <p><strong>Total:</strong> ${{ number_format($totalPrice, 2) }}</p>
 
-        <form method="POST" action="{{ route('booking.pay', $booking->id) }}">
+        <form method="POST" action="{{ route('user.booking.pay', $booking->id) }}">
             @csrf
 
             <div class="mb-4">

@@ -18,7 +18,7 @@
                 <h3 class="text-xl font-semibold mb-2">{{ $room->room_number }} - {{ $room->roomType->name }}</h3>
                 <p class="text-gray-600 mb-2">{{ \Illuminate\Support\Str::limit($room->description, 100) }}</p>
                 <p class="text-blue-600 font-semibold mb-2">${{ number_format($room->roomType->base_price, 2) }} per night</p>
-                <a href="{{ route('booking.create', ['room_id' => $room->id, 'check_in' => $check_in, 'check_out' => $check_out, 'guests' => $guests]) }}"
+                <a href="{{ route('user.booking.create', ['room_id' => $room->id, 'check_in' => $check_in, 'check_out' => $check_out, 'guests' => $guests]) }}"
                     class="inline-block text-blue-500 hover:underline font-medium">
                     Book Now
                  </a>

@@ -83,7 +83,7 @@
                 @endphp
 
                 @if ($isAvailable && request('guests') <= $room->roomType->capacity)
-                    <a href="{{ route('booking.create', [
+                    <a href="{{ route('user.booking.create', [
                         'room_id' => $room->id,
                         'check_in' => request('check_in'),
                         'check_out' => request('check_out'),
@@ -98,6 +98,39 @@
                     </div>
                 @endif
             @endif
+
+            
+            <!-- Reviews Section -->
+<div class="mt-8">
+    <h3 class="text-xl font-semibold mb-4">Guest Reviews ({{ $room->reviews->count() }})</h3>
+
+    @if($room->reviews->isEmpty())
+        <p class="text-gray-600 italic">No reviews yet. Be the first to review this room!</p>
+    @else
+        <div class="space-y-6">
+            @foreach($room->reviews as $review)
+                <div class="border rounded-lg p-4 bg-gray-50">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="font-semibold text-gray-800">{{ $review->user ? $review->user->name : 'Anonymous' }}</div>
+                        <div class="text-yellow-500">
+                            {{-- Display stars based on rating --}}
+                            @for ($i = 0; $i < 5; $i++)
+                                @if ($i < $review->rating)
+                                    <i class="fas fa-star"></i>
+                                @else
+                                    <i class="far fa-star"></i>
+                                @endif
+                            @endfor
+                        </div>
+                    </div>
+                    <p class="text-gray-700">{{ $review->comment }}</p>
+                    <p class="text-xs text-gray-400 mt-1">{{ $review->created_at->format('M d, Y') }}</p>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
+
         </div>
     </div>
 </div>

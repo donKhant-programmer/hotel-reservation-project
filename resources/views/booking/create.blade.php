@@ -14,7 +14,7 @@
             <p class="text-blue-600 font-medium text-sm">Price: ${{ number_format($room->roomType->base_price, 2) }} per night</p>
         </div>
 
-        <form action="{{ route('booking.store') }}" method="POST" class="space-y-5">
+        <form action="{{ route('user.booking.store') }}" method="POST" class="space-y-5">
             @csrf
 
             <input type="hidden" name="room_id" value="{{ $room->id }}">
@@ -59,9 +59,10 @@
             </div>
 
             {{-- Submit --}}
-            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-sm sm:text-base font-semibold transition mt-3">
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-sm sm:text-base font-semibold transition mt-3">Continue to Payment</button>
+            {{-- <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-sm sm:text-base font-semibold transition mt-3">
                 Confirm Booking
-            </button>
+            </button> --}}
         </form>
     </div>
 </div>

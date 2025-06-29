@@ -38,12 +38,15 @@
             <td>
                 @php
     $badgeClass = match($booking->status) {
-        'confirmed' => 'success',
-        'checked_in' => 'primary',
-        'checked_out' => 'secondary',
-        'cancelled' => 'danger',
-        default => 'light',
-    };
+    'pending'    => 'warning',   // Yellow for pending
+    'paid'       => 'info',      // Blue for paid
+    'confirmed'  => 'success',   // Green for confirmed
+    'checked_in' => 'primary',   // Blue for checked in
+    'checked_out'=> 'secondary', // Gray for checked out
+    'cancelled'  => 'danger',    // Red for cancelled
+    default      => 'light',     // Light gray for unknown
+};
+
 @endphp
 
 <span class="badge bg-{{ $badgeClass }}">
@@ -58,7 +61,7 @@
                     @csrf
                     @method('PUT')
                     <select name="status" onchange="this.form.submit()" class="form-select form-select-sm">
-                        @foreach(['confirmed', 'checked_in', 'checked_out', 'cancelled'] as $status)
+                        @foreach(['pending', 'paid', 'confirmed', 'checked_in', 'checked_out', 'cancelled'] as $status)
                             <option value="{{ $status }}" {{ $booking->status == $status ? 'selected' : '' }}>
                                 {{ ucfirst(str_replace('_', ' ', $status)) }}
                             </option>

@@ -18,7 +18,7 @@
                             <span class="text-yellow-600 font-bold">${{ $room['price'] }}/night</span>
                         </div>
                         <p class="text-gray-600 mb-4">{{ $room['description'] }}</p>
-                        <form method="GET" action="{{ route('booking') }}">
+                        <form method="GET" action="{{ route('user.booking') }}">
                             <input type="hidden" name="room_id" value="{{ $room['id'] }}">
                             <input type="hidden" name="check_in" value="{{ $check_in }}">
                             <input type="hidden" name="check_out" value="{{ $check_out }}">

@@ -12,12 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
-    public function showSearchForm()
-    {
-        return view('booking.search');
-    }
-
-
     public function checkAvailability(Request $request)
 {
     $validated = $request->validate([
@@ -52,24 +46,22 @@ class BookingController extends Controller
     ]);
 }
 
+//     public function index(Request $request)
+//     {
+//         // Get room types from database or config
+//         $roomTypes = [
+//             ['id' => 1, 'name' => 'Deluxe Room', 'price' => 199],
+//             ['id' => 2, 'name' => 'Executive Suite', 'price' => 299],
+//             ['id' => 3, 'name' => 'Presidential Suite', 'price' => 499]
+//         ];
 
-    
-    public function index(Request $request)
-    {
-        // Get room types from database or config
-        $roomTypes = [
-            ['id' => 1, 'name' => 'Deluxe Room', 'price' => 199],
-            ['id' => 2, 'name' => 'Executive Suite', 'price' => 299],
-            ['id' => 3, 'name' => 'Presidential Suite', 'price' => 499]
-        ];
+//         // Get query parameters if coming from home page
+//         $checkIn = $request->input('check_in', '');
+//         $checkOut = $request->input('check_out', '');
+//         $guests = $request->input('guests', 1);
 
-        // Get query parameters if coming from home page
-        $checkIn = $request->input('check_in', '');
-        $checkOut = $request->input('check_out', '');
-        $guests = $request->input('guests', 1);
-
-        return view('booking', compact('roomTypes', 'checkIn', 'checkOut', 'guests'));
-    }
+//         return view('booking', compact('roomTypes', 'checkIn', 'checkOut', 'guests'));
+//     }
 
     public function create(Request $request)
 {
@@ -83,20 +75,18 @@ class BookingController extends Controller
     ]);
 }
 
+// for admin side
 public function updateStatus(Request $request, Booking $booking)
-{
-    $request->validate([
-        'status' => 'required|in:confirmed,cancelled,checked_in,checked_out'
-    ]);
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:pending,paid,confirmed,cancelled,checked_in,checked_out',
+        ]);
 
-    $booking->update([
-        'status' => $request->status
-    ]);
+        $booking->status = $validated['status'];
+        $booking->save();
 
-    return back()->with('success', 'Booking status updated.');
-}
-
-
+        return redirect()->back()->with('success', 'Booking status updated successfully.');
+    }
 
 public function store(Request $request)
 {
@@ -114,10 +104,28 @@ public function store(Request $request)
     $booking = Booking::create([
         ...$validated,
         'reference' => 'BOOK-' . strtoupper(Str::random(8)),
-    'user_id' => Auth::id(),
+        'user_id' => Auth::id(),
+        'status' => 'pending' // Add this field to track payment status
     ]);
 
-    // Send confirmation email (optional)
+    // Optionally send email now, or after payment success
+
+    return redirect()->route('user.booking.payment', $booking->id);
+}
+
+public function payment(Booking $booking)
+{
+    return view('booking.payment', compact('booking'));
+}
+
+public function pay(Request $request, Booking $booking)
+{
+    $booking->update([
+        'status' => 'paid',
+        'payment_method' => $request->payment_method ?? 'mock_card',
+    ]);
+
+    // Send confirmation email
     Mail::to($booking->email)->send(new \App\Mail\BookingConfirmed($booking));
 
     return view('booking.confirmation', compact('booking'));
@@ -125,9 +133,6 @@ public function store(Request $request)
 
     public function confirm(Request $request)
     {
-        // Store booking logic here (save to DB or session, send email, etc.)
-        // For now, just return a success view
-
         return view('booking-success', [
             'name' => $request->full_name,
             'checkIn' => $request->check_in,

@@ -14,7 +14,11 @@
             <p><strong>Check-out:</strong> {{ $booking->check_out }}</p>
         </div>
 
-        <a href="{{ route('home') }}" class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+        <a href="{{ route('user.reviews.create', $booking->id) }}" class="mt-6 inline-block bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded">
+            Leave a Review
+        </a>
+        
+        <a href="{{ route('home') }}" class="mt-6 ml-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
             Back to Home
         </a>
     </div>
