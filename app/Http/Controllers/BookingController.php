@@ -45,24 +45,6 @@ class BookingController extends Controller
         'guests' => $validated['guests'],
     ]);
 }
-
-//     public function index(Request $request)
-//     {
-//         // Get room types from database or config
-//         $roomTypes = [
-//             ['id' => 1, 'name' => 'Deluxe Room', 'price' => 199],
-//             ['id' => 2, 'name' => 'Executive Suite', 'price' => 299],
-//             ['id' => 3, 'name' => 'Presidential Suite', 'price' => 499]
-//         ];
-
-//         // Get query parameters if coming from home page
-//         $checkIn = $request->input('check_in', '');
-//         $checkOut = $request->input('check_out', '');
-//         $guests = $request->input('guests', 1);
-
-//         return view('booking', compact('roomTypes', 'checkIn', 'checkOut', 'guests'));
-//     }
-
     public function create(Request $request)
 {
     $room = Room::with('roomType')->findOrFail($request->room_id);

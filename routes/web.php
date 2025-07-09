@@ -9,7 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\BookingController;
-use App\Http\Controllers\UserRoomController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RoomTypeController;
 
@@ -18,12 +18,12 @@ use App\Http\Controllers\Admin\RoomTypeController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Show all rooms
-// Route::get('/rooms', [UserRoomController::class, 'index'])->name('rooms.index');
-Route::get('/room-list', [UserRoomController::class, 'index'])->name('rooms');
-// Route::get('/rooms-list', [UserRoomController::class, 'index'])->name('rooms');
+// Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
+Route::get('/room-list', [RoomController::class, 'index'])->name('rooms');
+// Route::get('/rooms-list', [RoomController::class, 'index'])->name('rooms');
 
 // Show single room details
-Route::get('/rooms/{room}', [UserRoomController::class, 'show'])->name('rooms.show');
+Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
 
 // Booking routes - fixed duplicate routes
 Route::get('/booking/search', [BookingController::class, 'showSearchForm'])->name('booking.search');

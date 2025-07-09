@@ -22,7 +22,19 @@
 </style>
 @endsection
 
+
 @section('content')
+@if(session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-none shadow-sm w-full" role="alert">
+        <div class="flex justify-center">
+            <div class="w-full max-w-screen-xl text-center">
+                <strong class="font-semibold">Success!</strong>
+                <span class="ml-2">{{ session('success') }}</span>
+            </div>
+        </div>
+    </div>
+@endif
+
     <!-- Hero Section -->
     <section class="hero-bg h-screen flex items-center justify-center relative">
         <div class="absolute inset-0 bg-black opacity-40"></div>
@@ -254,3 +266,17 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+<script>
+    setTimeout(() => {
+        const alert = document.querySelector('[role="alert"]');
+        if (alert) {
+            alert.style.transition = 'opacity 0.5s ease';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
+        }
+    }, 3000);
+</script>
+@endpush
+
