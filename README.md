@@ -33,9 +33,6 @@ This system allows users to search, book, and manage hotel reservations while pr
 - Use Case Diagrams
 - Full project documentation included
 
-## 📷 Screenshots
-(Add screenshots here if available)
-
 ## 🔗 Repository
 https://github.com/donKhant-programmer/hotel-reservation-project
 
